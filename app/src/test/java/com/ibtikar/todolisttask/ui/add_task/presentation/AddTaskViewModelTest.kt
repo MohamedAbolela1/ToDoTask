@@ -4,6 +4,7 @@ import com.ibtikar.todolisttask.ui.add_task.domain.repository.AddTaskRepository
 import com.ibtikar.todolisttask.ui.base.data.Status
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest
@@ -45,6 +46,18 @@ class AddTaskViewModelTest {
     }
 
     @Test
+    fun `Given invalid task data, When saveTask, Then verify saveTask not invoked`() =
+        runBlockingTest {
+            // WHEN
+            val saveTask = addTaskViewModel.saveTask(null, "")
+
+            // THEN
+            verify(exactly = 0) {
+                runBlockingTest { addTaskRepository.saveTask(any(), any(), any()) }
+            }
+        }
+
+    @Test
     fun `Given valid task data, When saveTask, Then emit Status_Success`() = runBlockingTest {
         // GIVEN
         addTaskViewModel.onDateSelected(Date(TASK_DATE))
@@ -54,6 +67,20 @@ class AddTaskViewModelTest {
 
         // THEN
         assertEquals(Status.Success(Unit), actualValue)
+    }
+
+    @Test
+    fun `Given valid task data, When saveTask, Then verify saveTask invoked once`() = runBlockingTest {
+        // GIVEN
+        addTaskViewModel.onDateSelected(Date(TASK_DATE))
+
+        // WHEN
+        val actualValue = addTaskViewModel.saveTask(TASK_TITLE, TASK_BODY).first()
+
+        // THEN
+        verify(exactly = 1) {
+            runBlockingTest { addTaskRepository.saveTask(any(), any(), any()) }
+        }
     }
 
 }
