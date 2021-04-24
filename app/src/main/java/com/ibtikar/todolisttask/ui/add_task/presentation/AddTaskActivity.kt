@@ -10,6 +10,7 @@ import com.ibtikar.todolisttask.databinding.ActivityAddTaskBinding
 import com.ibtikar.todolisttask.ui.TodoApplication
 import com.ibtikar.todolisttask.ui.base.data.Status
 import com.ibtikar.todolisttask.ui.base.presentation.BaseActivity
+import com.ibtikar.todolisttask.utils.date.DatePickerUtil
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
@@ -45,7 +46,16 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>() {
     }
 
     private fun setListeners() {
+        binding.etSelectDate.setOnClickListener { onSelectDateClicked() }
         binding.btnSave.setOnClickListener { onBtnSaveClicked() }
+    }
+
+    private fun onSelectDateClicked() {
+        DatePickerUtil.showDateTimePicker(this) { date ->
+            addTaskViewModel.onDateSelected(date)?.let {
+                binding.etSelectDate.setText(it)
+            }
+        }
     }
 
     private fun onBtnSaveClicked() {
@@ -53,8 +63,7 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>() {
             lifecycleScope.launch {
                 addTaskViewModel.saveTask(
                     etToDoTitle.text?.toString(),
-                    etToDoDescription.text?.toString(),
-                    Date()
+                    etToDoDescription.text?.toString()
                 ).collect { onSaveTaskStateRetrieved(it) }
             }
         }
