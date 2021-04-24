@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object DateFormat {
-    const val FORMAT_EEE_MMM_DD_YYYY_H_MM_SS = "hh:mm a dd/mm/yyyy"
+    const val FORMAT_EEE_MMM_DD_YYYY_H_MM_SS = "hh:mm a dd/MM/yyyy"
 
     fun formatDateToString(
         date: Date,
