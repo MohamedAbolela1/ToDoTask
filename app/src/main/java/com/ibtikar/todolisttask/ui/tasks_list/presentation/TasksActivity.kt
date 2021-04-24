@@ -1,6 +1,7 @@
 package com.ibtikar.todolisttask.ui.tasks_list.presentation
 
 import android.view.LayoutInflater
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.ibtikar.todolisttask.databinding.ActivityTasksBinding
 import com.ibtikar.todolisttask.ui.TodoApplication
@@ -13,7 +14,9 @@ class TasksActivity : BaseActivity<ActivityTasksBinding>() {
     @Inject
     lateinit var tasksListViewModelProvider: TasksListViewModelProvider
 
-    private lateinit var tasksListViewModel: TasksListViewModel
+    private val tasksListViewModel by viewModels<TasksListViewModel>() {
+        tasksListViewModelProvider
+    }
 
     override val bindingInflater: (LayoutInflater) -> ActivityTasksBinding
         get() = ActivityTasksBinding::inflate
@@ -31,9 +34,7 @@ class TasksActivity : BaseActivity<ActivityTasksBinding>() {
     }
 
     private fun initViewModel() {
-        tasksListViewModel =
-            ViewModelProvider(this, tasksListViewModelProvider)
-                .get(TasksListViewModel::class.java)
+        tasksListViewModel.getTasksList()
     }
 
     private fun setListeners() {

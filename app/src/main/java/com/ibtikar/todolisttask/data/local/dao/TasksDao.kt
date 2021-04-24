@@ -10,7 +10,7 @@ interface TasksDao {
     fun getTasksList(): Flow<List<TaskEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addTask(task: TaskEntity)
+    suspend fun addTask(task: TaskEntity)
 
     @Update
     suspend fun updateTask(task: TaskEntity): Int
