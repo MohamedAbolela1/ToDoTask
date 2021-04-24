@@ -1,9 +1,8 @@
 package com.ibtikar.todolisttask.ui.tasks_list.presentation
 
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ibtikar.todolisttask.databinding.ActivityTasksBinding
@@ -67,9 +66,18 @@ class TasksActivity : BaseActivity<ActivityTasksBinding>() {
 
     private fun onTasksListStateRetrieved(status: Status<MutableList<TaskItem>>) {
         when (status) {
-            is Status.Success -> tasksAdapter.insertAll(status.data)
-            is Status.Error -> Log.e("xxx", "onTasksListStateRetrieved:${status.message} ")
+            is Status.Success -> onTaskListSuccess(status.data)
+            is Status.Error -> onTasksListError(status.message)
         }
     }
 
+    private fun onTaskListSuccess(tasksList: MutableList<TaskItem>) {
+        binding.tvError.visibility = View.GONE
+        tasksAdapter.insertAll(tasksList)
+    }
+
+    private fun onTasksListError(errorMessage: String) {
+        binding.tvError.visibility = View.VISIBLE
+        binding.tvError.text = errorMessage
+    }
 }
