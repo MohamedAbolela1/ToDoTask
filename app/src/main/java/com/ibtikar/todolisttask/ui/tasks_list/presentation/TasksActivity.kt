@@ -1,35 +1,31 @@
 package com.ibtikar.todolisttask.ui.tasks_list.presentation
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
 import com.ibtikar.todolisttask.databinding.ActivityTasksBinding
 import com.ibtikar.todolisttask.ui.TodoApplication
+import com.ibtikar.todolisttask.ui.base.BaseActivity
 import javax.inject.Inject
 
-class TasksActivity : AppCompatActivity() {
+class TasksActivity : BaseActivity<ActivityTasksBinding>() {
 
     @Inject
     lateinit var tasksListViewModelProvider: TasksListViewModelProvider
 
     private lateinit var tasksListViewModel: TasksListViewModel
 
-    private lateinit var binding: ActivityTasksBinding
+    override val bindingInflater: (LayoutInflater) -> ActivityTasksBinding
+        get() = ActivityTasksBinding::inflate
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        initDependencyInjection()
-        super.onCreate(savedInstanceState)
-        binding = ActivityTasksBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        initViewModel()
-    }
-
-    private fun initDependencyInjection() {
+    override fun initDependencyInjection() {
         (application as TodoApplication).appComponent
             .getTasksListComponentFactory()
             .create()
             .inject(this)
+    }
+
+    override fun setup() {
+        initViewModel()
     }
 
     private fun initViewModel() {
