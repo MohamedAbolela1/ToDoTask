@@ -1,4 +1,4 @@
-package com.ibtikar.todolisttask.ui.base
+package com.ibtikar.todolisttask.ui.base.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater

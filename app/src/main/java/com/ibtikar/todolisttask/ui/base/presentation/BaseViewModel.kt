@@ -1,4 +1,4 @@
-package com.ibtikar.todolisttask.ui.base
+package com.ibtikar.todolisttask.ui.base.presentation
 
 import androidx.lifecycle.ViewModel
 

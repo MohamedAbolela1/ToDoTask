@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.ibtikar.todolisttask.databinding.ActivityTasksBinding
 import com.ibtikar.todolisttask.ui.TodoApplication
 import com.ibtikar.todolisttask.ui.add_task.presentation.AddTaskActivity
-import com.ibtikar.todolisttask.ui.base.BaseActivity
+import com.ibtikar.todolisttask.ui.base.presentation.BaseActivity
 import javax.inject.Inject
 
 class TasksActivity : BaseActivity<ActivityTasksBinding>() {
