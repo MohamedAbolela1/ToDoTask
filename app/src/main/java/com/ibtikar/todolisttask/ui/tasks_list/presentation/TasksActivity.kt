@@ -1,12 +1,8 @@
 package com.ibtikar.todolisttask.ui.tasks_list.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import androidx.room.Room
-import com.ibtikar.todolisttask.data.local.ToDoDatabase
 import com.ibtikar.todolisttask.databinding.ActivityTasksBinding
 import com.ibtikar.todolisttask.ui.TodoApplication
 import javax.inject.Inject
