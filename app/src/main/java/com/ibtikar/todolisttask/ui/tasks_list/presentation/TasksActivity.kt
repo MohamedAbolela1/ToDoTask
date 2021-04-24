@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
 import com.ibtikar.todolisttask.databinding.ActivityTasksBinding
 import com.ibtikar.todolisttask.ui.TodoApplication
+import com.ibtikar.todolisttask.ui.add_task.presentation.AddTaskActivity
 import com.ibtikar.todolisttask.ui.base.BaseActivity
 import javax.inject.Inject
 
@@ -26,11 +27,18 @@ class TasksActivity : BaseActivity<ActivityTasksBinding>() {
 
     override fun setup() {
         initViewModel()
+        setListeners()
     }
 
     private fun initViewModel() {
         tasksListViewModel =
             ViewModelProvider(this, tasksListViewModelProvider)
                 .get(TasksListViewModel::class.java)
+    }
+
+    private fun setListeners() {
+        binding.btnAddTask.setOnClickListener {
+            AddTaskActivity.start(this)
+        }
     }
 }

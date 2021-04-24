@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">todo list task</string>
     <string name="add_task">Add TODO Task</string>
+    <string name="todo_title">Todo title</string>
+    <string name="write_your_title">Write your title</string>
+    <string name="todo_description">Todo description</string>
+    <string name="write_your_description">Write your description</string>
+    <string name="select_date">Select date</string>
+    <string name="save">Save</string>
 </resources>
