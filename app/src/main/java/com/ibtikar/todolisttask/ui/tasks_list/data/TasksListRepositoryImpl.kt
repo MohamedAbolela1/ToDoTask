@@ -2,7 +2,7 @@ package com.ibtikar.todolisttask.ui.tasks_list.data
 
 import com.ibtikar.todolisttask.data.local.dao.TasksDao
 import com.ibtikar.todolisttask.data.local.model.TaskEntity
-import com.ibtikar.todolisttask.ui.tasks_list.domain.TasksListRepository
+import com.ibtikar.todolisttask.ui.tasks_list.domain.repository.TasksListRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
