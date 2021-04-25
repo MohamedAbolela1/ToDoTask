@@ -2,6 +2,7 @@ package com.ibtikar.todolisttask.ui.add_task.presentation
 
 import android.content.Context
 import android.content.Intent
+import android.text.Editable
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -11,8 +12,14 @@ import com.ibtikar.todolisttask.ui.TodoApplication
 import com.ibtikar.todolisttask.ui.base.data.Status
 import com.ibtikar.todolisttask.ui.base.presentation.BaseActivity
 import com.ibtikar.todolisttask.utils.date.DatePickerUtil
+import kotlinx.android.synthetic.main.activity_add_task.*
+import kotlinx.android.synthetic.main.activity_tasks.*
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import java.text.SimpleDateFormat
+import wtf.qase.datetimepicker.DateTimePickerDialog
 import java.util.*
 import javax.inject.Inject
 
@@ -46,33 +53,31 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>() {
     }
 
     private fun setListeners() {
-        binding.etSelectDate.setOnClickListener { onSelectDateClicked() }
-        binding.btnSave.setOnClickListener { onBtnSaveClicked() }
-    }
-
-    private fun onSelectDateClicked() {
-        DatePickerUtil.showDateTimePicker(this) { date ->
-            addTaskViewModel.onDateSelected(date)?.let {
-                binding.etSelectDate.setText(it)
-            }
-        }
-    }
-
-    private fun onBtnSaveClicked() {
-        with(binding) {
-            lifecycleScope.launch {
+        binding.btnSave.setOnClickListener {
+            runBlocking {
                 addTaskViewModel.saveTask(
-                    etToDoTitle.text?.toString(),
-                    etToDoDescription.text?.toString()
-                ).collect { onSaveTaskStateRetrieved(it) }
+                    binding.etToDoTitle.text.toString().trim(),
+                    binding.etToDoDescription.text.toString().trim()
+                )
             }
-        }
-    }
 
-    private fun onSaveTaskStateRetrieved(status: Status<Unit>) {
-        when (status) {
-            is Status.Success -> finish()
-            is Status.Error -> Toast.makeText(this, status.message, Toast.LENGTH_SHORT).show()
+            finish()
+        }
+
+        val callback: (date: Date) -> Unit = { newDate ->
+            addTaskViewModel.onDateSelected(date = newDate)
+            val sdf = SimpleDateFormat("dd.MM.yyyy - HH:mm", Locale.getDefault())
+            binding.etSelectDate.setText(sdf.format(newDate))
+        }
+
+        binding.etSelectDate.setOnClickListener{
+            DateTimePickerDialog.show(
+                supportFragmentManager,
+                "fragment_datepicker",              //tag for fragment manager
+                callback,                           //calback with selected date
+                Date(),                             //current date
+                DateTimePickerDialog.TIME_DATE //choose one - DATE_TIME, TIME_ONLY, DATE_ONLY, TIME_DATE
+            )
         }
     }
 }

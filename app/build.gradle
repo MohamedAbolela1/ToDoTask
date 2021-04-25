@@ -73,4 +73,7 @@ dependencies {
     testImplementation "android.arch.core:core-testing:1.1.1"
     testImplementation "io.mockk:mockk:1.10.5"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2"
+
+    implementation 'com.github.Qase:AndroidDateTimePicker:1.4.0'
+
 }

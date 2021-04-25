@@ -8,7 +8,7 @@ import javax.inject.Inject
 class AddTaskRepositoryImpl @Inject constructor(
     private val tasksDoa: TasksDao
 ) : AddTaskRepository {
-    override suspend fun saveTask(taskTitle: String, taskDescription: String, date: Long) {
-        tasksDoa.addTask(TaskEntity(title = taskTitle, body = taskDescription, date = date))
+    override suspend fun saveTask(taskTitle: String, taskDescription: String, time: Long) {
+        tasksDoa.addTask(TaskEntity(title = taskTitle, body = taskDescription, date = time))
     }
 }
